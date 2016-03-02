@@ -67,6 +67,13 @@ Point2D Point2D::nearestNeighbour(const set <Point2D> &s) const{
     return nN;
 }
 
+//
+// Multiply or divide a point coordonnates by the same floating value
+//
+Point2D Point2D::homothety(const float &k, const float &l)const{
+    return Point2D(_x/k,_y/l);
+}
+
 
 //
 // Display 2D point

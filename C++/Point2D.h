@@ -46,6 +46,8 @@ public:
     Point2D nearestNeighbour(const set <Point2D> &s) const;
     // Add a point to an existing list of points
     void addPoint2D(vector<Point2D> &v) const;
+    // Multiply a point coordonnates by floating values
+    Point2D homothety(const float &k, const float &l)const;
 };
 
 //

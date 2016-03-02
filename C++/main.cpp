@@ -63,6 +63,8 @@ int main(int argc, const char * argv[]) {
        Run programm by command line in a terminal
     */
     
+    srand((unsigned int)time(0));
+    
     bool help, version, informations;
     int number = 2000; // while we don't enter an other number argument, variable number stays equal to 2000
     int width = 700, length = 700; // display window's default size
@@ -137,7 +139,7 @@ int main(int argc, const char * argv[]) {
     Sim.execute(strategy);
     
     // Display the information about executed simulation
-    cout << Sim1;
+    cout << Sim;
     cout << endl;
 
     // Click on the window to close it

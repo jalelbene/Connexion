@@ -17,14 +17,14 @@ from Simulation import *
   #
 
 # Number of random points
-n = input("Enter the number of points you want to generate : ")
+n = input("\nEnter the number of points you want to generate : ")
 n = int(n)
-print(n)    
+print(n, "\n")    
     
 # Choose a strategy
 s = input("Choose a strategy : " )
 s = int(s)
-print(s)
+print(s, "\n")
 
 # Create a simulation with given number of points
 Sim = Simulation(n)
@@ -33,5 +33,5 @@ Sim = Simulation(n)
 Sim.execute(s)
     
 # Display the information about executed simulation
-print(Sim)
+print(Sim, "\n")
     

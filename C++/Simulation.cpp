@@ -78,6 +78,8 @@ void Simulation::execute(const int &strategy){
     // Beginning of the simulation
     clock_t time1 = clock();
     
+    float length = 0;
+    
     // Choose of a unique random color
     Color c = Color(random(256),random(256),random(256));
     // or a unique set color with c in {BLACK, WHITE, RED, GREEN, BLUE, CYAN, MAGENTA, YELLOW}
@@ -87,15 +89,23 @@ void Simulation::execute(const int &strategy){
     // Opening the window and graphic instructions
     openWindow(this->xLim(), this->yLim());
     
+    // Waiting message
+    cout << "  processing ..." << endl;
+    cout << endl;
+    
     if(strategy == 1){
         
-        for(vector<Point2D>::iterator it=points.begin()+1; it != points.end()+1; ++it){
+        for(vector<Point2D>::iterator it=points.begin()+1; it != points.end(); ++it){
             // Find the nearest neighbour of the nth point among the (n-1)th firts ones
             vector<Point2D> previous(points.begin(), it);
             int nN = it->nearestNeighbour(previous);
             /* c = Color(random(256),random(256),random(256)); // To change color for each line */
             // Connect the random point to his nearest neighbour
             it->connect(points[nN],c);
+            // Add the just made connexion's length to the total length
+            Point2D I = it->homothety(this->xLim(), this->yLim());
+            Point2D N = points[nN].homothety(this->xLim(), this->yLim());
+            length += I.distance(N);
             }
     }
     
@@ -165,6 +175,10 @@ void Simulation::execute(const int &strategy){
             // Connect to nearest uncovered point to its nearest covered neighbour
             /* c = Color(random(256),random(256),random(256)); // To change color for each line */
             origin->connect(destination,c);
+            // Add the just made connexion's length to the total length
+            Point2D O = origin->homothety(this->xLim(), this->yLim());
+            Point2D D = destination.homothety(this->xLim(), this->yLim());
+            length += O.distance(D);
             // Put the nearest uncovered point in the covered points set ...
             coveredPoints.insert(destination);
             // ... and delete it from the uncovered points set
@@ -176,6 +190,9 @@ void Simulation::execute(const int &strategy){
     
     // Save the strategy
     this->saveStrategy(strategy);
+    
+    // Save the total length
+    this->saveCost(length);
     
     // End of the simulation
     clock_t time2 = clock();
@@ -189,12 +206,13 @@ void Simulation::execute(const int &strategy){
 // Display simulation informations
 //
 ostream &operator<<(ostream &os, Simulation const &sim) {
-    return os << "Simulation informations : \n"
-              << "  Generated points : " << sim.number() << "\n"
-              << "  Window's width : " << sim.xLim() << "\n"
-              << "  Window's height : " << sim.yLim() << "\n"
-              << "  Strategy : " << sim.strategy() << "\n"
-              << "  Executed in : " << sim.runtime() << " seconds"
+    return os << "Simulation results : \n"
+              << "    Generated points : " << sim.number() << "\n"
+              << "    Window's width : " << sim.xLim() << "\n"
+              << "    Window's height : " << sim.yLim() << "\n"
+              << "    Strategy : " << sim.strategy() << "\n"
+              << "    Cost : " << sim.cost() << "\n"
+              << "    Executed in : " << sim.runtime() << " seconds"
               << endl;
 }
 ostream &operator<<(ostream &os, Simulation* const &sim) {

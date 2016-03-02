@@ -24,6 +24,7 @@ class Simulation:
         self.listPoints = []
         self.strategy = 0
         self.runtime = 0
+        self.cost = 0
     # Fill the list of points with random Point2D
         for i in range(n):
             x = np.random.uniform(0,1)
@@ -54,9 +55,21 @@ class Simulation:
     def getTime(self):
         return self.runtime
     #
+    # Set the cost
+    def setCost(self,c):
+        self.cost = c
+    #
+    # Get the cost
+    def getCost(self):
+        return self.cost
+    #
     # Display a simulation informations
     def __repr__(self):
-        return "Simulation informations : Generated points = {} // Strategy = {} // Executed in : {}".format(self.numberPoints, self.strategy, self.runtime)
+        return """Simulation results :
+            Generated points = {} 
+            Strategy = {} 
+            Cost : {} 
+            Executed in : {} """.format(self.numberPoints, self.strategy, self.cost, self.runtime)           
     #
     def print(self):
         print(self)
@@ -65,32 +78,50 @@ class Simulation:
     def execute(self, str):
         # Beginning of the simulation
         time1 = time.clock()
+        length = 0
         #
+        # Start a figure with window limits (0,1)
         plt.figure()
         plt.xlim(0, 1)
         plt.ylim(0, 1)
         #
+        # Waiting message
+        print("  processing ... \n")
+        #
         if(str == 1):
+            # For every point in the list ...
             for pt in range(1,self.number()):
+                # find its nearest neighbour among the previous ones...
                 nN = (self.list()[pt]).nearestNeighbour(self.list()[:pt])
+                # ... and connect it
                 self.list()[pt].connect(nN)
+                # Add the just made connexion 's length to the total length
+                length += self.list()[pt].distance(nN)
         #
         else:
+            # Define covered and uncovered points sets
             coveredPoints = []
             uncoveredPoints = self.list()[:]
+            # Choose a random point in the list ...
             first = np.random.randint(self.number())
+            # ... add it as the first covered one ...
             coveredPoints.append(uncoveredPoints[first])
+            # ... and erase it from the uncovered points set
             del uncoveredPoints[first]
         #
+            # While there are uncovered points
             while(len(uncoveredPoints) != 0):
+                # Choose the first point in coveredPoints
                 id = 0
                 origin = coveredPoints[id]
                 destination = origin.nearestNeighbour(uncoveredPoints)
                 d = origin.distance(destination)
                 #
+                # For all other points after the first one ...
                 for pt in range(1,len(coveredPoints)):
                     P = coveredPoints[pt]
                     nN = P.nearestNeighbour(uncoveredPoints)
+                    # ... compare the distance bewteen points and their nearest neighbour
                     if(d > P.distance(nN)):
                         id = pt
                         origin = P
@@ -99,13 +130,20 @@ class Simulation:
             #                
                 # Connect to nearest uncovered point to its nearest covered neighbour
                 origin.connect(destination)
+                # Add the just made connexion's length to the total length
+                length += origin.distance(destination)
                 # Put the nearest uncovered point in the covered points set ...
                 coveredPoints.append(destination)
                 # ... and delete it from the uncovered points set
                 uncoveredPoints.remove(destination)
         #
+        # Save the used strategy
         self.setStrat(str)
         #
+        # Save the total length
+        self.setCost(length)
+        #
+        #Display the graphics
         plt.show()
         #
         # End of the simulation
