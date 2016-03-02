@@ -74,6 +74,13 @@ Point2D Point2D::homothety(const float &k, const float &l)const{
     return Point2D(_x/k,_y/l);
 }
 
+//
+// Set the color
+//
+void Point2D::colorIn(const Color &c){
+    _c = c;
+}
+
 
 //
 // Display 2D point

@@ -41,7 +41,7 @@ public:
     // Get the ordinates limit
     int yLim() const;
     // Save the used strategy
-    void saveStrategy(const int &str);
+    void saveStrategy(const int &s);
     // Get the used strategy
     int strategy() const;
     // Save the execution time

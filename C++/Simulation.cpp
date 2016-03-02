@@ -39,8 +39,8 @@ int Simulation::yLim()const{
 
 
 // Save the used strategy
-void Simulation::saveStrategy(const int &str){
-    strat = str;
+void Simulation::saveStrategy(const int &s){
+    strat = s;
 }
 
 
@@ -109,7 +109,7 @@ void Simulation::execute(const int &strategy){
             }
     }
     
-    else{
+    else if(strategy == 2){
         // Create the set of uncovered points
         set<Point2D> coveredPoints;
         
@@ -186,7 +186,41 @@ void Simulation::execute(const int &strategy){
             
         }
     }
-
+    
+    else if(strategy == 3){
+        
+        // Choose three different colors
+        Color c1 = RED;
+        Color c2 = BLUE;
+        Color c3 = GREEN;
+        
+        // Color the three first points in different colors
+        points.begin()->colorIn(c1);
+        (points.begin()+1)->colorIn(c2);
+        (points.begin()+2)->colorIn(c3);
+        
+        for(vector<Point2D>::iterator it=points.begin()+3; it != points.end(); ++it){
+            // Find the nearest neighbour of the nth point among the (n-1)th firts ones
+            vector<Point2D> previous(points.begin(), it);
+            int nN = it->nearestNeighbour(previous);
+            // Set the color of the new covered point
+            Color c_nN = points[nN].color();
+            it->colorIn(c_nN);
+            // Connect the random point to his nearest neighbour
+            it->connect(points[nN],c_nN);
+            // Add the just made connexion's length to the total length
+            Point2D I = it->homothety(this->xLim(), this->yLim());
+            Point2D N = points[nN].homothety(this->xLim(), this->yLim());
+            length += I.distance(N);
+        }
+        
+    }
+    
+    else{
+        cout << "You have entered an non-existent strategy" << endl;
+        cout << endl;
+    }
+    
     
     // Save the strategy
     this->saveStrategy(strategy);

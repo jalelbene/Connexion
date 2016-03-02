@@ -28,12 +28,17 @@ class Point2D
 {
     // Coordinates
     float _x, _y;
+    Color _c;
 public:
     // Create a new 2D point with given coordinates
     Point2D(float x, float y) : _x(x), _y(y) {}
     // Get coordinates
     inline float x() const { return _x; }
     inline float y() const { return _y; }
+    // Get the color
+    inline Color color() const { return _c; }
+    // Set the color
+    void colorIn(const Color &c);
     // Define a order between two Point2D
     bool operator<(const Point2D &pt) const;
     // Calculate the Euclidian distance between two points
@@ -48,6 +53,7 @@ public:
     void addPoint2D(vector<Point2D> &v) const;
     // Multiply a point coordonnates by floating values
     Point2D homothety(const float &k, const float &l)const;
+    
 };
 
 //
