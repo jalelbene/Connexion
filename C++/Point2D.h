@@ -46,7 +46,7 @@ public:
     // Draw a line between two points
     void connect(const Point2D &pt, const Color &c) const;
     // Determine the nearest neighbourg of a point among the ones in a vector
-    int nearestNeighbour(const vector <Point2D> &v) const;
+    Point2D nearestNeighbour(const vector <Point2D> &v) const;
     // Determine the nearest neighbourg of a point among the ones in a set
     Point2D nearestNeighbour(const set <Point2D> &s) const;
     // Add a point to an existing list of points

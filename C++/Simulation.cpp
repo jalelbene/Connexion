@@ -98,13 +98,13 @@ void Simulation::execute(const int &strategy){
         for(vector<Point2D>::iterator it=points.begin()+1; it != points.end(); ++it){
             // Find the nearest neighbour of the nth point among the (n-1)th firts ones
             vector<Point2D> previous(points.begin(), it);
-            int nN = it->nearestNeighbour(previous);
+            Point2D nN = it->nearestNeighbour(previous);
             /* c = Color(random(256),random(256),random(256)); // To change color for each line */
             // Connect the random point to his nearest neighbour
-            it->connect(points[nN],c);
+            it->connect(nN,c);
             // Add the just made connexion's length to the total length
             Point2D I = it->homothety(this->xLim(), this->yLim());
-            Point2D N = points[nN].homothety(this->xLim(), this->yLim());
+            Point2D N = nN.homothety(this->xLim(), this->yLim());
             length += I.distance(N);
             }
     }
@@ -202,15 +202,15 @@ void Simulation::execute(const int &strategy){
         for(vector<Point2D>::iterator it=points.begin()+3; it != points.end(); ++it){
             // Find the nearest neighbour of the nth point among the (n-1)th firts ones
             vector<Point2D> previous(points.begin(), it);
-            int nN = it->nearestNeighbour(previous);
+            Point2D nN = it->nearestNeighbour(previous);
             // Set the color of the new covered point
-            Color c_nN = points[nN].color();
+            Color c_nN = nN.color();
             it->colorIn(c_nN);
             // Connect the random point to his nearest neighbour
-            it->connect(points[nN],c_nN);
+            it->connect(nN,c_nN);
             // Add the just made connexion's length to the total length
             Point2D I = it->homothety(this->xLim(), this->yLim());
-            Point2D N = points[nN].homothety(this->xLim(), this->yLim());
+            Point2D N = nN.homothety(this->xLim(), this->yLim());
             length += I.distance(N);
         }
         
@@ -218,7 +218,6 @@ void Simulation::execute(const int &strategy){
     
     else{
         cout << "You have entered an non-existent strategy" << endl;
-        cout << endl;
     }
     
     

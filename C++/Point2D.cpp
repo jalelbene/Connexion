@@ -44,11 +44,11 @@ void Point2D::addPoint2D(vector<Point2D> &v) const {
 //
 // Determine the nearest neighbourg of a point among the ones in a vector
 //
-int Point2D::nearestNeighbour(const vector <Point2D> &v) const {
-    int nN=0;
-    for(vector<Point2D>::const_iterator it = v.begin(); it != v.end(); ++it){
-        if(this->distance(v[nN]) > this->distance(*it)){
-            nN = it - v.begin();
+POint2D Point2D::nearestNeighbour(const vector <Point2D> &v) const {
+    Point2D nN = *(v.begin());
+    for(vector<Point2D>::const_iterator it = v.begin()+1; it != v.end(); ++it){
+        if(this->distance(nN) > this->distance(*it)){
+            nN = *it;
         }
     }
     return nN;
@@ -59,7 +59,7 @@ int Point2D::nearestNeighbour(const vector <Point2D> &v) const {
 //
 Point2D Point2D::nearestNeighbour(const set <Point2D> &s) const{
     Point2D nN = *(s.begin());
-    for(set<Point2D>::const_iterator it = s.begin(); it != s.end(); ++it){
+    for(set<Point2D>::const_iterator it = ++(s.begin()); it != s.end(); ++it){
         if(this->distance(nN) > this->distance(*it)){
             nN = *it;
         }
