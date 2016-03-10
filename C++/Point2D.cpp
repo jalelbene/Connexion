@@ -44,7 +44,7 @@ void Point2D::addPoint2D(vector<Point2D> &v) const {
 //
 // Determine the nearest neighbourg of a point among the ones in a vector
 //
-POint2D Point2D::nearestNeighbour(const vector <Point2D> &v) const {
+Point2D Point2D::nearestNeighbour(const vector <Point2D> &v) const {
     Point2D nN = *(v.begin());
     for(vector<Point2D>::const_iterator it = v.begin()+1; it != v.end(); ++it){
         if(this->distance(nN) > this->distance(*it)){
