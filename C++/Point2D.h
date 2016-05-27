@@ -28,7 +28,10 @@ class Point2D
 {
     // Coordinates
     float _x, _y;
+    // color
     Color _c;
+    //weight
+    float _p;
 public:
     // Create a new 2D point with given coordinates
     Point2D(float x, float y) : _x(x), _y(y) {}
@@ -39,6 +42,10 @@ public:
     inline Color color() const { return _c; }
     // Set the color
     void colorIn(const Color &c);
+    // Get the parameter p for strategy 4
+    inline float p() const { return _p; }
+    // Set the parameter p for strategy 4
+    void parameter(const float &p);
     // Define a order between two Point2D
     bool operator<(const Point2D &pt) const;
     // Calculate the Euclidian distance between two points

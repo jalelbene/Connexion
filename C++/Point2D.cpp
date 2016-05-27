@@ -12,6 +12,20 @@ using std::ostream;
 
 
 
+//
+// Set the color
+//
+void Point2D::colorIn(const Color &c){
+    _c = c;
+}
+
+//
+// Set the parameter p for strategy 4
+void Point2D::parameter(const float &p){
+    _p = p;
+}
+
+
 
 //
 //Define a order between two Point2D
@@ -74,12 +88,6 @@ Point2D Point2D::homothety(const float &k, const float &l)const{
     return Point2D(_x/k,_y/l);
 }
 
-//
-// Set the color
-//
-void Point2D::colorIn(const Color &c){
-    _c = c;
-}
 
 
 //
